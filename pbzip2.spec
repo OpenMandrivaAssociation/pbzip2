@@ -1,13 +1,13 @@
 Summary:	Parallel implementation of bzip2
 Name:		pbzip2
-Version:	1.0.1
+Version:	1.0.2
 Release:	%mkrel 1
 URL:		http://www.compression.ca/pbzip2/
 License:	BSD
 Group:		Archiving/Compression
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root
 BuildRequires:	tar, gzip, make, gcc-c++, bzip2-devel
-Source0:	http://www.compression.ca/pbzip2/%{name}-%{version}.tar.bz2
+Source0:	http://www.compression.ca/pbzip2/%{name}-%{version}.tar.gz
 
 %description
 PBZIP2 is a parallel implementation of the bzip2 block-sorting file
