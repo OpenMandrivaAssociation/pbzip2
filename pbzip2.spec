@@ -5,6 +5,7 @@ Release:	%mkrel 1
 URL:		http://www.compression.ca/pbzip2/
 License:	BSD
 Group:		Archiving/Compression
+BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root
 BuildRequires:	tar, gzip, make, gcc-c++, bzip2-devel
 Source0:	http://www.compression.ca/pbzip2/%{name}-%{version}.tar.gz
 
