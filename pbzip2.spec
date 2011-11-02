@@ -1,5 +1,5 @@
 Name:		pbzip2
-Version:	1.1.5
+Version:	1.1.6
 Release:	%mkrel 1
 Summary:	Parallel implementation of bzip2
 URL:		http://www.compression.ca/pbzip2/
