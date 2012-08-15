@@ -1,6 +1,6 @@
 Name:		pbzip2
-Version:	1.1.6
-Release:	%mkrel 2
+Version:	1.1.8
+Release:	%mkrel 1
 Summary:	Parallel implementation of bzip2
 URL:		http://www.compression.ca/pbzip2/
 License:	BSD
@@ -24,17 +24,12 @@ sed -i -e 's/ -O2/ %{optflags} /' Makefile
 make
 
 %install
-rm -rf %{buildroot}
 install -D -m755 %{name} %{buildroot}%{_bindir}/%{name}
 install -D -m644 %{name}.1 %{buildroot}%{_mandir}/man1/%{name}.1
 ln -sf ./%{name} %{buildroot}%{_bindir}/pbunzip2
 ln -sf ./%{name} %{buildroot}%{_bindir}/pbzcat
 
-%clean
-rm -rf %{buildroot}
-
 %files
-%defattr(-,root,root)
 %doc AUTHORS ChangeLog COPYING README
 %{_bindir}/%{name}
 %{_bindir}/pbunzip2
