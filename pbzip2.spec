@@ -1,6 +1,6 @@
 Name:		pbzip2
 Version:	1.1.9
-Release:	1
+Release:	2
 Summary:	Parallel implementation of bzip2
 URL:		http://www.compression.ca/pbzip2/
 License:	BSD
