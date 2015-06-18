@@ -1,6 +1,6 @@
 Name:		pbzip2
 Version:	1.1.9
-Release:	2
+Release:	3
 Summary:	Parallel implementation of bzip2
 URL:		http://www.compression.ca/pbzip2/
 License:	BSD
@@ -18,10 +18,11 @@ decompressed with bzip2).
 
 %prep
 %setup -q
+%global optflags %{optflags} -Ofast
 sed -i -e 's/ -O2/ %{optflags} /' Makefile
 
 %build
-make
+%make
 
 %install
 install -D -m755 %{name} %{buildroot}%{_bindir}/%{name}
