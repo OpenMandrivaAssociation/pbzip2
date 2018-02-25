@@ -6,6 +6,7 @@ URL:		http://www.compression.ca/pbzip2/
 Source0:	https://launchpad.net/pbzip2/1.1/%{version}/+download/%{name}-%{version}.tar.gz
 License:	BSD
 Group:		Archiving/Other
+Patch0:		pbzip2-1.1.13-invalid-suffix-on-literal-C11-requires-a-space.patch
 BuildRequires:	pkgconfig(bzip2)
 Conflicts:	bzip2 < 1.0.6-28
 
@@ -19,12 +20,15 @@ decompressed with bzip2).
 
 %prep
 %setup -q
+%apply_patches
+
+%build
 %global optflags %{optflags} -Ofast
+%setup_compile_flags
+
 sed -i -e 's/ -O2/ %{optflags} /' Makefile
 sed -i -e 's/LDFLAGS =.*/LDFLAGS = %{ldflags} /' Makefile
 
-%build
-%setup_compile_flags
 %make
 
 %install

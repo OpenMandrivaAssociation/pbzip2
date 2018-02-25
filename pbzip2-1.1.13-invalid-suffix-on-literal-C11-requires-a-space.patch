@@ -1,0 +1,239 @@
+diff -Naur pbzip2-1.1.13/pbzip2.cpp pbzip2-1.1.13.tpg/pbzip2.cpp
+--- pbzip2-1.1.13/pbzip2.cpp	2015-12-17 23:32:49.000000000 +0000
++++ pbzip2-1.1.13.tpg/pbzip2.cpp	2018-02-25 22:11:55.456660181 +0000
+@@ -556,7 +556,7 @@
+ 	safe_mutex_lock(OutMutex);
+ 	#ifdef PBZIP_DEBUG
+ 	uintmax_t thid = (uintmax_t) pthread_self();
+-	fprintf(stderr, "(%"PRIuMAX") syncSetLastGoodBlock: %d -> %d; MinErrorBlock: %d -> %d\n",
++	fprintf(stderr, "(%" PRIuMAX ") syncSetLastGoodBlock: %d -> %d; MinErrorBlock: %d -> %d\n",
+ 		 thid, LastGoodBlock, newValue, MinErrorBlock, errBlock);
+ 	#endif
+ 
+@@ -663,7 +663,7 @@
+ 	#ifdef PBZIP_DEBUG
+ 	uintmax_t thid = (uintmax_t) pthread_self();
+ 	safe_mutex_lock(OutMutex);
+-	fprintf( stderr, "(%"PRIuMAX") waitForPreviousBlock enter: LastGoodBlock=%d"
++	fprintf( stderr, "(%" PRIuMAX ") waitForPreviousBlock enter: LastGoodBlock=%d"
+ 		"; blockNumToWait=%d; NextBlockToWrite=%d; MinErrorBlock=%d; errBlockNumber=%d\n",
+ 		thid,
+ 		LastGoodBlock, blockNumToWait, NextBlockToWrite,
+@@ -676,7 +676,7 @@
+ 		if (syncGetTerminateFlag() != 0)
+ 		{
+ 			#ifdef PBZIP_DEBUG
+-			fprintf(stderr, "(%"PRIuMAX") waitForPreviousBlock terminated [%d]: blockNumToWait=%d\n",
++			fprintf(stderr, "(%" PRIuMAX ") waitForPreviousBlock terminated [%d]: blockNumToWait=%d\n",
+ 				thid, -1, blockNumToWait );
+ 			#endif
+ 			return -1;
+@@ -685,7 +685,7 @@
+ 		safe_mutex_lock(OutMutex);
+ 
+ 		#ifdef PBZIP_DEBUG
+-		fprintf( stderr, "(%"PRIuMAX") waitForPreviousBlock before check: LastGoodBlock=%d; blockNumToWait=%d; NextBlockToWrite=%d; MinErrorBlock=%d\n",
++		fprintf( stderr, "(%" PRIuMAX ") waitForPreviousBlock before check: LastGoodBlock=%d; blockNumToWait=%d; NextBlockToWrite=%d; MinErrorBlock=%d\n",
+ 			thid, LastGoodBlock, blockNumToWait, NextBlockToWrite, MinErrorBlock );
+ 		#endif
+ 
+@@ -693,7 +693,7 @@
+ 		if ( (MinErrorBlock != -1) && (MinErrorBlock < errBlockNumber) )
+ 		{
+ 			#ifdef PBZIP_DEBUG
+-			fprintf( stderr, "(%"PRIuMAX") waitForPreviousBlock exit [%d]: LastGoodBlock=%d; blockNumToWait=%d; NextBlockToWrite=%d; MinErrorBlock=%d\n",
++			fprintf( stderr, "(%" PRIuMAX ") waitForPreviousBlock exit [%d]: LastGoodBlock=%d; blockNumToWait=%d; NextBlockToWrite=%d; MinErrorBlock=%d\n",
+ 				thid, 2, LastGoodBlock, blockNumToWait, NextBlockToWrite, MinErrorBlock );
+ 			#endif
+ 			safe_mutex_unlock(OutMutex);
+@@ -703,7 +703,7 @@
+ 		if (errBlockNumber <= NextBlockToWrite)
+ 		{
+ 			#ifdef PBZIP_DEBUG
+-			fprintf( stderr, "(%"PRIuMAX") waitForPreviousBlock exit [%d]: LastGoodBlock=%d; blockNumToWait=%d; NextBlockToWrite=%d; MinErrorBlock=%d\n",
++			fprintf( stderr, "(%" PRIuMAX ") waitForPreviousBlock exit [%d]: LastGoodBlock=%d; blockNumToWait=%d; NextBlockToWrite=%d; MinErrorBlock=%d\n",
+ 				thid, 0, LastGoodBlock, blockNumToWait, NextBlockToWrite, MinErrorBlock );
+ 			#endif
+ 			safe_mutex_unlock(OutMutex);
+@@ -711,7 +711,7 @@
+ 		}
+ 
+ 		#ifdef PBZIP_DEBUG
+-		fprintf( stderr, "(%"PRIuMAX") waitForPreviousBlock to sleep: LastGoodBlock=%d; blockNumToWait=%d; NextBlockToWrite=%d; MinErrorBlock=%d\n",
++		fprintf( stderr, "(%" PRIuMAX ") waitForPreviousBlock to sleep: LastGoodBlock=%d; blockNumToWait=%d; NextBlockToWrite=%d; MinErrorBlock=%d\n",
+ 			thid, LastGoodBlock, blockNumToWait, NextBlockToWrite, MinErrorBlock );
+ 		#endif
+ 
+@@ -760,7 +760,7 @@
+ {
+ 	#ifdef PBZIP_DEBUG
+ 	uintmax_t thid = (uintmax_t) pthread_self();
+-	fprintf(stderr, "(%"PRIuMAX") enter issueDecompressError: msg=%s; ret=%d; block=%d; seq=%d; isLastInSeq=%d; avail_in=%d\n",
++	fprintf(stderr, "(%" PRIuMAX ") enter issueDecompressError: msg=%s; ret=%d; block=%d; seq=%d; isLastInSeq=%d; avail_in=%d\n",
+ 		thid,
+ 		errmsg, bzret, fileData->blockNumber,
+ 		outSequenceNumber, (int)fileData->isLastInSequence, strm.avail_in);
+@@ -796,7 +796,7 @@
+ 
+ 	#ifdef PBZIP_DEBUG
+ 	uintmax_t thid = (uintmax_t) pthread_self();
+-	fprintf(stderr, "(%"PRIuMAX") enter decompressErrCheckSingle: msg=%s; ret=%d; block=%d; seq=%d; isLastInSeq=%d; avail_in=%d; lastGoodBlock=%d\n",
++	fprintf(stderr, "(%" PRIuMAX ") enter decompressErrCheckSingle: msg=%s; ret=%d; block=%d; seq=%d; isLastInSeq=%d; avail_in=%d; lastGoodBlock=%d\n",
+ 		thid,
+ 		errmsg, bzret, fileData->blockNumber,
+ 		outSequenceNumber, (int)fileData->isLastInSequence, strm.avail_in, lastGoodBlock);
+@@ -1220,7 +1220,7 @@
+ 			// give warning to user if block is larger than 250 million bytes
+ 			if (fileData->bufSize > 250000000)
+ 			{
+-				fprintf(stderr, "pbzip2:  *WARNING: Compressed block size is large [%"PRIuMAX" bytes].\n",
++				fprintf(stderr, "pbzip2:  *WARNING: Compressed block size is large [%" PRIuMAX " bytes].\n",
+ 						(uintmax_t) fileData->bufSize);
+ 				fprintf(stderr, "          If program aborts, use regular BZIP2 to decompress.\n");
+ 			}
+@@ -1244,7 +1244,7 @@
+ 			}
+ 		}
+ 		#ifdef PBZIP_DEBUG
+-		fprintf(stderr, "producer:  Buffer: %p  Size: %"PRIuMAX"   Block: %d\n", fileData->buf,
++		fprintf(stderr, "producer:  Buffer: %p  Size: %" PRIuMAX "   Block: %d\n", fileData->buf,
+ 			(uintmax_t)fileData->bufSize, NumBlocks);
+ 		#endif
+ 
+@@ -1308,7 +1308,7 @@
+ 		isInterrupted = true;
+ 
+ 		#ifdef PBZIP_DEBUG
+-		fprintf (stderr, "(%"PRIuMAX") consumer_decompress: interrupt1 - TerminateFlag set.\n", thid);
++		fprintf (stderr, "(%" PRIuMAX ") consumer_decompress: interrupt1 - TerminateFlag set.\n", thid);
+ 		#endif
+ 	}
+ 	int minErrBlock = syncGetMinErrorBlock();
+@@ -1320,7 +1320,7 @@
+ 		isInterrupted = true;
+ 
+ 		#ifdef PBZIP_DEBUG
+-		fprintf (stderr, "(%"PRIuMAX") consumer_decompress: terminating1 - LastGoodBlock set [%d].\n", thid, syncGetLastGoodBlock());
++		fprintf (stderr, "(%" PRIuMAX ") consumer_decompress: terminating1 - LastGoodBlock set [%d].\n", thid, syncGetLastGoodBlock());
+ 		#endif
+ 	}
+ 
+@@ -1664,8 +1664,8 @@
+ 		safe_mutex_lock(OutMutex);
+ 		#ifdef PBZIP_DEBUG
+ 		outBuff * lastnext = (prevBlockInSequence != NULL) ? prevBlockInSequence->next : NULL;
+-		fprintf(stderr, "fileWriter:  Block: %d Size: %"PRIuMAX" Next File Block: %d"
+-				", outBufferPos: %"PRIuMAX", NumBlocks: %d, producerDone: %d, lastseq=%d"
++		fprintf(stderr, "fileWriter:  Block: %d Size: %" PRIuMAX " Next File Block: %d"
++				", outBufferPos: %" PRIuMAX ", NumBlocks: %d, producerDone: %d, lastseq=%d"
+ 				", prev=%p, next=%p\n",
+ 				currBlock, (uintmax_t)NumBufferedBlocksMax, NextBlockToWrite,
+ 				(uintmax_t)outBufferPos, NumBlocks, syncGetProducerDone(), lastseq,
+@@ -1791,7 +1791,7 @@
+ 			}
+ 			
+ 			#ifdef PBZIP_DEBUG
+-			fprintf(stderr, "Completed: %d%%  NextBlockToWrite: %d/%"PRIuMAX"        \r", percentComplete, NextBlockToWrite, (uintmax_t)NumBufferedBlocksMax);
++			fprintf(stderr, "Completed: %d%%  NextBlockToWrite: %d/%" PRIuMAX "        \r", percentComplete, NextBlockToWrite, (uintmax_t)NumBufferedBlocksMax);
+ 			fflush(stderr);
+ 			#else
+ 			if (percentComplete != percentCompleteOld)
+@@ -1829,7 +1829,7 @@
+ 	
+ 	if (QuietMode != 1)
+ 	{
+-		fprintf(stderr, "    Output Size: %"PRIuMAX" bytes\n", (uintmax_t)CompressedSize);
++		fprintf(stderr, "    Output Size: %" PRIuMAX " bytes\n", (uintmax_t)CompressedSize);
+ 	}
+ 
+ 	#ifdef PBZIP_DEBUG
+@@ -1855,7 +1855,7 @@
+ 		percentComplete = 100;
+ 
+ 		#ifdef PBZIP_DEBUG
+-		fprintf(stderr, "Completed: %d%%  NextBlockToWrite: %d/%"PRIuMAX"        \r", percentComplete, NextBlockToWrite, (uintmax_t)NumBufferedBlocksMax);
++		fprintf(stderr, "Completed: %d%%  NextBlockToWrite: %d/%" PRIuMAX "        \r", percentComplete, NextBlockToWrite, (uintmax_t)NumBufferedBlocksMax);
+ 		fflush(stderr);
+ 		#else
+ 
+@@ -1929,7 +1929,7 @@
+ 			inSize = bytesLeft;
+ 
+ 		#ifdef PBZIP_DEBUG
+-		fprintf(stderr, " -> Bytes To Read: %"PRIuMAX" bytes...\n", (uintmax_t)inSize);
++		fprintf(stderr, " -> Bytes To Read: %" PRIuMAX " bytes...\n", (uintmax_t)inSize);
+ 		#endif
+ 
+ 		// allocate memory to read in file
+@@ -2006,7 +2006,7 @@
+ 		}
+ 
+ 		#ifdef PBZIP_DEBUG
+-		fprintf(stderr, "\n   Original Block Size: %"PRIuMAX"\n", (uintmax_t)inSize);
++		fprintf(stderr, "\n   Original Block Size: %" PRIuMAX "\n", (uintmax_t)inSize);
+ 		fprintf(stderr, " Compressed Block Size: %u\n", outSize);
+ 		#endif
+ 
+@@ -2072,7 +2072,7 @@
+ 		close(hOutfile);
+ 	if (QuietMode != 1)
+ 	{
+-		fprintf(stderr, "    Output Size: %"PRIuMAX" bytes\n", (uintmax_t)CompressedSize);
++		fprintf(stderr, "    Output Size: %" PRIuMAX " bytes\n", (uintmax_t)CompressedSize);
+ 	}
+ 
+ 	syncSetProducerDone(1); // Not really needed for direct version
+@@ -2417,7 +2417,7 @@
+ 		inSize = blockSize;
+ 
+ 		#ifdef PBZIP_DEBUG
+-		fprintf(stderr, " -> Bytes To Read: %"PRIuMAX" bytes...\n", (uintmax_t)inSize);
++		fprintf(stderr, " -> Bytes To Read: %" PRIuMAX " bytes...\n", (uintmax_t)inSize);
+ 		#endif
+ 
+ 		// allocate memory to read in file
+@@ -2478,7 +2478,7 @@
+ 			}
+ 		}
+ 		#ifdef PBZIP_DEBUG
+-		fprintf(stderr, "producer:  Buffer: %p  Size: %"PRIuMAX"   Block: %d\n", FileData, (uintmax_t)inSize, NumBlocks);
++		fprintf(stderr, "producer:  Buffer: %p  Size: %" PRIuMAX "   Block: %d\n", FileData, (uintmax_t)inSize, NumBlocks);
+ 		#endif
+ 
+ 		outBuff * queueElement = new(std::nothrow) outBuff(FileData, inSize, NumBlocks, 0);
+@@ -2794,7 +2794,7 @@
+ 	// unlikely to get here since more likely exception will be thrown
+ 	if (OutputBuffer.size() != size)
+ 	{
+-		fprintf(stderr, "pbzip2: *ERROR: Could not initialize (OutputBuffer); size=%"PRIuMAX"!  Aborting...\n", (uintmax_t)size);
++		fprintf(stderr, "pbzip2: *ERROR: Could not initialize (OutputBuffer); size=%" PRIuMAX "!  Aborting...\n", (uintmax_t)size);
+ 		safe_mutex_unlock(OutMutex);
+ 		exit(1);
+ 	}
+@@ -4102,7 +4102,7 @@
+ 			if (decompress == 1)
+ 				fprintf(stderr, " BWT Block Size: %c00k\n", BWTblockSizeChar);
+ 			if (hasInFile)
+-				fprintf(stderr, "     Input Size: %"PRIuMAX" bytes\n", (uintmax_t)InFileSize);
++				fprintf(stderr, "     Input Size: %" PRIuMAX " bytes\n", (uintmax_t)InFileSize);
+ 		}
+ 
+ 		if (decompress == 1)
+@@ -4214,7 +4214,7 @@
+ 			NumBufferedBlocksMax = NumBufferedBlocksMax - (numCPU * 2);
+ 		#ifdef PBZIP_DEBUG
+ 		fprintf(stderr, "pbzip2: maxMemory: %d    blockSize: %d\n", maxMemory, blockSize);
+-		fprintf(stderr, "pbzip2: NumBufferedBlocksMax: %"PRIuMAX"\n", (uintmax_t)NumBufferedBlocksMax);
++		fprintf(stderr, "pbzip2: NumBufferedBlocksMax: %" PRIuMAX "\n", (uintmax_t)NumBufferedBlocksMax);
+ 		#endif
+ 		// check to see if our max buffered blocks is less than numCPU, if yes increase maxMemory
+ 		// to support numCPU requested unless -m switch given by user
+@@ -4224,7 +4224,7 @@
+ 			{
+ 				NumBufferedBlocksMax = numCPU;
+ 				if (QuietMode != 1)
+-					fprintf(stderr, "*Warning* Max memory limit increased to %"PRIuMAX" MB to support %d CPUs\n", (uintmax_t)((NumBufferedBlocksMax + (numCPU * 2)) * blockSize)/1000000, numCPU);
++					fprintf(stderr, "*Warning* Max memory limit increased to %" PRIuMAX " MB to support %d CPUs\n", (uintmax_t)((NumBufferedBlocksMax + (numCPU * 2)) * blockSize)/1000000, numCPU);
+ 			}
+ 			else
+ 			{
