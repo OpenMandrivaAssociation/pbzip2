@@ -1,11 +1,11 @@
 Name:		pbzip2
-Version:	1.1.9
-Release:	3
+Version:	1.1.13
+Release:	1
 Summary:	Parallel implementation of bzip2
 URL:		http://www.compression.ca/pbzip2/
 License:	BSD
 Group:		Archiving/Other
-BuildRequires:	bzip2-devel
+BuildRequires:	pkgconfig(bzip2)
 Source0:	https://launchpad.net/pbzip2/1.1/%{version}/+download/%{name}-%{version}.tar.gz
 
 %description
@@ -20,15 +20,14 @@ decompressed with bzip2).
 %setup -q
 %global optflags %{optflags} -Ofast
 sed -i -e 's/ -O2/ %{optflags} /' Makefile
+sed -i -e 's/LDFLAGS.*/LDFLAGS = %{ldflags} /' Makefile
 
 %build
+%setup_compile_flags
 %make
 
 %install
-install -D -m755 %{name} %{buildroot}%{_bindir}/%{name}
-install -D -m644 %{name}.1 %{buildroot}%{_mandir}/man1/%{name}.1
-ln -sf ./%{name} %{buildroot}%{_bindir}/pbunzip2
-ln -sf ./%{name} %{buildroot}%{_bindir}/pbzcat
+%makeinstall_std
 
 %files
 %doc AUTHORS ChangeLog COPYING README
