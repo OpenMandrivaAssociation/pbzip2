@@ -1,12 +1,13 @@
 Name:		pbzip2
 Version:	1.1.13
-Release:	1
+Release:	2
 Summary:	Parallel implementation of bzip2
 URL:		http://www.compression.ca/pbzip2/
+Source0:	https://launchpad.net/pbzip2/1.1/%{version}/+download/%{name}-%{version}.tar.gz
 License:	BSD
 Group:		Archiving/Other
 BuildRequires:	pkgconfig(bzip2)
-Source0:	https://launchpad.net/pbzip2/1.1/%{version}/+download/%{name}-%{version}.tar.gz
+Conflicts:	bzip2 < 1.0.6-28
 
 %description
 PBZIP2 is a parallel implementation of the bzip2 block-sorting file
@@ -29,9 +30,17 @@ sed -i -e 's/LDFLAGS.*/LDFLAGS = %{ldflags} /' Makefile
 %install
 %makeinstall_std
 
+# (tpg) provide compat symlinks to use pbzip2 system-wide
+ln -sf %{_bindir}/%{name} %{buildroot}%{_bindir}/bzip2
+ln -sf %{_bindir}/pbunzip2 %{buildroot}%{_bindir}/bunzip2
+ln -sf %{_bindir}/pbzcat %{buildroot}%{_bindir}/bzcat
+
 %files
 %doc AUTHORS ChangeLog COPYING README
 %{_bindir}/%{name}
 %{_bindir}/pbunzip2
 %{_bindir}/pbzcat
+%{_bindir}/bzip2
+%{_bindir}/bunzip2
+%{_bindir}/bzcat
 %{_mandir}/man1/*
