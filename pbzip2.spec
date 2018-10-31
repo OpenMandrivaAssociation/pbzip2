@@ -1,6 +1,6 @@
 Name:		pbzip2
 Version:	1.1.13
-Release:	2
+Release:	3
 Summary:	Parallel implementation of bzip2
 URL:		http://www.compression.ca/pbzip2/
 Source0:	https://launchpad.net/pbzip2/1.1/%{version}/+download/%{name}-%{version}.tar.gz
