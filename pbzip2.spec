@@ -23,7 +23,7 @@ decompressed with bzip2).
 
 %build
 %global optflags %{optflags} -O3
-%setup_compile_flags
+%set_build_flags
 
 sed -i -e 's/ -O2/ %{optflags} /' Makefile
 sed -i -e 's/LDFLAGS =.*/LDFLAGS = %{ldflags} /' Makefile
