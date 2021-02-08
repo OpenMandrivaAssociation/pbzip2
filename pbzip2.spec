@@ -17,7 +17,6 @@ machines.  The output of this version is fully compatible with bzip2
 v1.0.2 or newer (ie: anything compressed with pbzip2 can be 
 decompressed with bzip2).
 
-
 %prep
 %autosetup -p1
 
@@ -26,7 +25,7 @@ decompressed with bzip2).
 %set_build_flags
 
 sed -i -e 's/ -O2/ %{optflags} /' Makefile
-sed -i -e 's/LDFLAGS =.*/LDFLAGS = %{ldflags} /' Makefile
+sed -i -e 's/LDFLAGS =.*/LDFLAGS = %{build_ldflags} /' Makefile
 
 %make_build
 
