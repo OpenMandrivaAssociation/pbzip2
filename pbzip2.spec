@@ -7,6 +7,7 @@ Source0:	https://launchpad.net/pbzip2/1.1/%{version}/+download/%{name}-%{version
 License:	BSD
 Group:		Archiving/Other
 Patch0:		pbzip2-1.1.13-invalid-suffix-on-literal-C11-requires-a-space.patch
+BuildRequires:	make
 BuildRequires:	pkgconfig(bzip2)
 Conflicts:	bzip2 < 1.0.6-28
 
